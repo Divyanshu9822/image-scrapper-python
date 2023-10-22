@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Scraper</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 600px;
+        width: 100%;
+        padding: 0 20px;
+      }
+
+      h1 {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 16px 0;
+      }
+
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"],
+      input[type="range"],
+      input[type="submit"] {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      input[type="text"] {
+        font-size: 16px;
+      }
+
+      input[type="range"] {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      input[type="submit"] {
+        background-color: #333;
+        color: #fff;
+        font-size: 20px;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #444;
+      }
+
+      .alert {
+        background-color: #56f436;
+        color: white;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div class="alert">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+      <h1>Image Scraper</h1>
+      <form method="POST" enctype="multipart/form-data">
+        <label for="search_query">Search Query:</label>
+        <input type="text" id="search_query" name="search_query" required />
+        <label for="num_images">Number of Images:</label>
+        <input
+          type="range"
+          id="num_images"
+          name="num_images"
+          min="1"
+          max="20"
+          step="1"
+          value="1"
+        />
+        <span id="num_images_value">1</span>
+        <input type="submit" value="Scrape Images" />
+      </form>
+    </div>
+    <script>
+      var slider = document.getElementById("num_images");
+      var output = document.getElementById("num_images_value");
+      output.innerHTML = slider.value;
+
+      slider.oninput = function () {
+        output.innerHTML = this.value;
+      };
+    </script>
+  </body>
+</html>
